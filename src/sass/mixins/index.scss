@@ -2,7 +2,7 @@
   background-color: var(--el-menu-bg-color);
 }
 
-// dropdown 下 li 标签的通用样式
+// Common style for li tags under dropdown
 @mixin GeneralDropdownLi {
   min-width: 150px;
   width: auto;
@@ -12,14 +12,14 @@
   text-overflow: ellipsis;
 }
 
-// dropdown 下 a 标签的通用样式
+// Common style for a tags under dropdown
 @mixin GeneralDropdownA {
   font-size: 13px;
   font-weight: 300;
   padding: 0 15px;
 }
 
-// dropdown 下 li 的 a 标签通用样式
+// Common style for a tags inside li under dropdown
 @mixin GeneralDropdownLia {
   width: 100%;
   color: var(--el-text-color-light);

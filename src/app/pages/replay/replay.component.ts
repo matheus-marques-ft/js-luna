@@ -58,7 +58,7 @@ export class PagesReplayComponent implements OnInit {
       this._http.getReplay(sid).subscribe(
         data => {
           if (data['error']) {
-            alert('没找到录像文件');
+            alert('Recording file not found');
             clearInterval(interval);
             this.loading = false;
             return;
@@ -79,7 +79,7 @@ export class PagesReplayComponent implements OnInit {
           }
         },
         err => {
-          alert('没找到录像文件');
+          alert('Recording file not found');
           clearInterval(interval);
           this.loading = false;
         }

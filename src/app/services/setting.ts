@@ -32,7 +32,7 @@ export class SettingService {
     let url = "/api/v1/settings/public/";
     const connectionToken = getQueryParamFromURL("token");
     if (connectionToken) {
-      // 解决 /luna/connect?connectToken= 直接方式权限认证问题
+      // Resolve the permission authentication issue for the /luna/connect?connectToken= direct access method
       url += `?token=${connectionToken}`;
     }
     this.globalSetting = await this._http.get<any>(url).toPromise();
@@ -76,7 +76,7 @@ export class SettingService {
   }
 
   setFavicon() {
-    // 更改favicon
+    // Change favicon
     const link: any =
       document.querySelector("link[rel*='icon']") ||
       document.createElement("link");
@@ -159,7 +159,7 @@ export class SettingService {
     this.keyboardLayout$.next(this.setting.graphics.keyboard_layout);
   }
 
-  // 全局跳过手动输入windows账号密码
+  // Globally skip manual input of Windows account password
   globalSkipAllManualPassword(): boolean {
     return this.globalSetting.WINDOWS_SKIP_ALL_MANUAL_PASSWORD;
   }

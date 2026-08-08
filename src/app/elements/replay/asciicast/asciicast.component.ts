@@ -49,18 +49,18 @@ export class ElementReplayAsciicastComponent implements OnInit, AfterViewInit {
     this.startTimeStamp = Date.parse(this.replay.date_start);
     this.startTime = this.toSafeLocalDateStr(date);
     this.route.queryParams.pipe(filter(params => params.timestamp)).subscribe(params => {
-      // 从指定的时间戳开始播放，减去 5 秒误差提前开始
+      // Start playback from the given timestamp, starting 5 seconds earlier to offset the margin of error
       this.startAt = parseInt(params.timestamp, 10) - 5;
       if (this.startAt <= 0) {
         this.startAt = 0;
       }
-      // duration 应该是毫秒，需要转换为秒进行比较
+      // duration should be in milliseconds, needs to be converted to seconds for comparison
       const durationInSeconds = duration / 1000;
       if (this.startAt >= durationInSeconds) {
         this.startAt = durationInSeconds;
       }
     });
-    this.rows = Math.min(25, Math.floor((window.innerHeight - 120) / 16)); // 限制最大25行，调整计算方式
+    this.rows = Math.min(25, Math.floor((window.innerHeight - 120) / 16)); // Limit to a max of 25 rows, adjust the calculation
     this.position = '00:00';
     this.duration = formatTime(duration);
     this.getCommands(this.page);
@@ -181,7 +181,7 @@ export class ElementReplayAsciicastComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 重置播放器并保持当前播放位置和状态
+   * Reset the player while keeping the current playback position and state
    */
   private async resetPlayerWithCurrentTime() {
     if (!this.player) return;
@@ -281,7 +281,7 @@ export class ElementReplayAsciicastComponent implements OnInit, AfterViewInit {
       },
       err => {
         console.error('getCommandsData error:', err);
-        alert('没找到命令记录');
+        alert('No command records found');
       }
     );
   }

@@ -5,7 +5,7 @@
       (lostpointercapture)="onLauncherLostPointerCapture($event)"
       (pointerdown)="onLauncherPointerDown($event)"
       [class.dragging]="isDragging"
-      aria-label="移动浮动工具栏"
+      aria-label="Move floating toolbar"
       class="chat-drag-handle"
       type="button"
     >
@@ -16,7 +16,7 @@
       @if (isShowSetting && subViews.length === 1) {
         <button
           (click)="handleShowDrawer()"
-          aria-label="打开设置"
+          aria-label="Open settings"
           class="chat-action-button"
           type="button"
         >
@@ -26,7 +26,7 @@
       <button
         (click)="showChatAI()"
         [hidden]="!chatAiApiEnabled"
-        aria-label="打开智能问答"
+        aria-label="Open AI assistant"
         class="chat-action-button chat-ai-button"
         type="button"
       >

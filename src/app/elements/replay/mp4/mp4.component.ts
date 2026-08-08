@@ -65,7 +65,7 @@ export class ElementsReplayMp4Component implements OnInit {
           this.commands = this.commands.concat(results);
         },
         err => {
-          alert('没找到命令记录');
+          alert('No command records found');
         }
       );
   }

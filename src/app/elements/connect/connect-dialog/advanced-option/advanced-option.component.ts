@@ -202,7 +202,7 @@ export class ElementAdvancedOptionComponent implements OnChanges, OnInit {
     this.advancedOptions = this.allOptions.filter(i => !i.hidden());
     this.isShowAdvancedOption = this.advancedOptions.length > 0;
 
-    // 如果记住的 select 值已不在可选项中，回退到 web 或默认值
+    // If the remembered select value is no longer among the options, fall back to web or the default value
     this.advancedOptions
       .filter(i => i.type === 'select')
       .forEach(i => {

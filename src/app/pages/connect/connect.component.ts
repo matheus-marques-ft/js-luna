@@ -45,10 +45,10 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   private timerDragSize: { width: number; height: number } | null = null;
   private timerStartRect: { left: number; top: number } | null = null;
 
-  // 人脸在线相关
+  // Face online related
   private faceMonitorToken: string;
 
-  // Direct 模式相关属性
+  // Direct mode related properties
   public endpoint: Endpoint;
   public assetId: string = '';
   public org_id: string = '';
@@ -63,7 +63,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   private pausedElapsedTime: number = 0;
   private subscription: Subscription;
 
-  // Direct 模式私有属性
+  // Direct mode private properties
   private permedAsset: any;
   private connectData: any;
   private account: Account;
@@ -121,7 +121,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 检查是否为直连模式
+   * Check whether it is direct connect mode
    */
   private checkDirectMode() {
     if (this._route.snapshot.routeConfig?.path === 'admin-connect') {
@@ -129,7 +129,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
     }
 
     const params = this._route.snapshot.queryParams;
-    // 检查是否有 direct: true 参数，或者同时有 account, asset, protocol 参数
+    // Check if there is a direct: true parameter, or account, asset, protocol parameters together
     this.isDirect =
       params['direct'] === 'true' || !!(params['account'] && params['asset'] && params['protocol']);
 
@@ -151,7 +151,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 初始化直连模式
+   * Initialize direct connect mode
    */
   private async initDirectMode() {
     this._logger.info('DirectComponent initialized');
@@ -169,7 +169,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 获取连接数据（直连模式）
+   * Get connect data (direct mode)
    */
   async getConnectData() {
     this.asset = await this._http.getAssetDetail(this.assetId).toPromise();
@@ -206,7 +206,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 创建连接令牌（直连模式）
+   * Create connection token (direct mode)
    */
   async createConnectionToken() {
     const asset = this.asset;
@@ -254,7 +254,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 获取连接令牌
+   * Get connection token
    */
   private getConnectToken(assetMessage: any, connectData: any) {
     return new Promise(async (resolve, reject) => {
@@ -297,7 +297,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 根据协议确定连接方法
+   * Determine connect method based on protocol
    */
   private getMethodByProtocol(protocol: string): string {
     const endpointProtocol = window.location.protocol.replace(':', '');
@@ -376,7 +376,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
 
   onNewView(view?) {
     if (this.isDirect && !view) {
-      // 直连模式创建视图
+      // Create view in direct mode
       this.view = new View(
         this.permedAsset,
         {
@@ -400,7 +400,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
         this.startTimer();
       }
 
-      // 发送视图变更消息
+      // Send view change message
       setTimeout(
         () => {
           this._drawerStateService.sendComponentMessage({
@@ -414,7 +414,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 处理关闭连接
+   * Handle closing the connection
    */
   public async handleCloseConnect() {
     if (this.isDirect) {
@@ -429,7 +429,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 处理打开抽屉
+   * Handle opening the drawer
    */
   public async handleOpenDrawer() {
     if (this.isDirect) {
@@ -491,7 +491,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 处理页面可见性变化和计时器管理
+   * Handle page visibility change and timer management
    */
   handleEventChangeTime() {
     document.addEventListener('visibilitychange', () => {
@@ -512,7 +512,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 处理鼠标移动事件，控制操作图标显示
+   * Handle mouse move event, control action icons visibility
    */
   private handleMouseMove(event: MouseEvent): void {
     this.showActionIcons = event.clientY <= 65;
@@ -666,7 +666,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 开始计时器
+   * Start timer
    */
   private startTimer(): void {
     if (this.timerInterval) {
@@ -677,7 +677,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 停止计时器
+   * Stop timer
    */
   private stopTimer(): void {
     if (this.timerInterval) {
@@ -688,14 +688,14 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 补零
+   * Zero pad
    */
   private padZero(value: number): string {
     return String(value).padStart(2, '0');
   }
 
   /**
-   * 更新连接时间
+   * Update connect time
    */
   private updateConnectTime(): void {
     if (this.isTimerStopped) {
@@ -715,7 +715,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 获取资产信息（用于显示）
+   * Get asset info (for display)
    */
   public getAssetInfo(): any {
     if (this.isDirect) {
@@ -736,7 +736,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 判断是否为非协议连接
+   * Determine whether it is a non-protocol connection
    */
   public isNoneProtocol(): boolean {
     if (this.isDirect) {
@@ -761,7 +761,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 判断当前视图是否为 GUI 组件
+   * Determine whether the current view is a GUI component
    */
   public isGuiComponent(): boolean {
     const componentName = this.view?.connectMethod?.component as string | undefined;
@@ -769,7 +769,7 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 判断当前视图是否为终端类组件
+   * Determine whether the current view is a terminal-type component
    */
   public isTerminalComponent(): boolean {
     const componentName = this.view?.connectMethod?.component as string | undefined;
@@ -777,14 +777,14 @@ export class PagesConnectComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * 是否为 Web SFTP
+   * Whether it is Web SFTP
    */
   public isWebSftp(): boolean {
     return this.view?.connectMethod?.value === 'web_sftp';
   }
 
   /**
-   * 是否为 Web CLI 或 Web GUI
+   * Whether it is Web CLI or Web GUI
    */
   public isWebCliOrGui(): boolean {
     const value = this.view?.connectMethod?.value as string | undefined;

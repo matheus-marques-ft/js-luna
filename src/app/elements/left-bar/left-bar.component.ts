@@ -82,7 +82,7 @@ export class ElementLeftBarComponent implements OnInit, AfterViewInit, OnDestroy
     this.resizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
         const width = entry.contentRect.width;
-        // 这里你可以触发你需要的逻辑
+        // You can trigger the logic you need here
       }
     });
 

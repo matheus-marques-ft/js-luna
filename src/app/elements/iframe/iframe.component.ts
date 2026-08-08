@@ -158,7 +158,7 @@ export class ElementIframeComponent implements OnInit, AfterViewInit, OnDestroy 
         case 'MOUSEEVENT':
         case 'INPUT_ACTIVE':
           this.renewalTrigger.next();
-          // KOKO 新定义的 input 事件，给所有其他 view 发送 sendInputActive 函数续期
+          // The newly defined KOKO input event, renews by sending the sendInputActive function to all other views
           this.sendInputActiveToOtherViews();
       }
     }.bind(this);
@@ -179,7 +179,7 @@ export class ElementIframeComponent implements OnInit, AfterViewInit, OnDestroy 
   handleIframeEvent() {
     let disbaleFileManager: boolean = false;
 
-    // 对于没有授权 sftp 协议的资产，不会在 koko 中展示文件管理
+    // For assets that are not authorized for the sftp protocol, file management won't be shown in koko
     if (!this.view.asset.permed_protocols.some((protocol: Protocol) => protocol.name === 'sftp')) {
       disbaleFileManager = true;
     }
@@ -190,7 +190,7 @@ export class ElementIframeComponent implements OnInit, AfterViewInit, OnDestroy 
       this.iframeWindow.postMessage({ name: 'PING', id: this.id, disbaleFileManager }, '*');
     }, 500);
 
-    // 30s 内未PING通, 则主动关闭
+    // If PING doesn't succeed within 30s, close proactively
     setTimeout(
       function () {
         clearInterval(this.ping);
@@ -212,7 +212,7 @@ export class ElementIframeComponent implements OnInit, AfterViewInit, OnDestroy 
     this.iframeWindow.postMessage({ name: 'CMD', data: data.data }, '*');
   }
 
-  // 没有位置用啊
+  // Not used anywhere
   // messageHandler = (event: MessageEvent) => {
   //   if (event.data && typeof event.data === 'object') {
   //     this.termComp = event.data;
@@ -227,13 +227,13 @@ export class ElementIframeComponent implements OnInit, AfterViewInit, OnDestroy 
       return;
     }
 
-    // 更新当前 view 的 connectToken
+    // Update the connectToken of the current view
     this.view.connectToken = newConnectToken;
 
     const url = this.src.replace(oldConnectToken.id, newConnectToken.id);
     this.src = 'about:blank';
 
-    // 清理旧的事件监听器
+    // Clean up the old event listener
     window.removeEventListener('message', this.eventHandler);
     if (this.ping) {
       clearInterval(this.ping);
@@ -257,17 +257,17 @@ export class ElementIframeComponent implements OnInit, AfterViewInit, OnDestroy 
 
   sendInputActiveToOtherViews() {
     const currentTime = Date.now();
-    const minInterval = 10000; // 10秒间隔
+    const minInterval = 10000; // 10-second interval
 
-    // 检查是否已经过了最少10秒间隔
+    // Check whether at least 10 seconds have passed since the last send
     if (currentTime - this.lastSendInputActiveTime < minInterval) {
-      return; // 如果间隔不足10秒，直接返回
+      return; // If less than 10 seconds have passed, return directly
     }
 
-    // 更新最后发送时间
+    // Update the last send time
     this.lastSendInputActiveTime = currentTime;
 
-    // 遍历所有 view，给除了当前 view 之外的其他 view 发送 sendInputActive
+    // Iterate over all views, sending sendInputActive to every view other than the current one
     this._viewSvc.viewList.forEach(view => {
       if (view.id !== this.view.id && view.termComp && typeof view.termComp.sendInputActive === 'function') {
         view.termComp.sendInputActive();

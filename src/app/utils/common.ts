@@ -92,17 +92,17 @@ export function getWaterMarkFields(user: User, asset: Asset) {
 export function getWaterMarkContent(user: User, asset: Asset, settingService: SettingService) {
   const fields = getWaterMarkFields(user, asset);
   const template = settingService.globalSetting.SECURITY_WATERMARK_SESSION_CONTENT || '';
-  // 找出模板中所有的变量占位符 ${xxx}
+  // Find all variable placeholders ${xxx} in the template
   const placeholders: string[] = template.match(/\${([^}]+)}/g) || [];
   const allVariables = {};
-  // 为模板中的每个变量准备值
+  // Prepare a value for each variable in the template
   placeholders.forEach(placeholder => {
-    const varName = placeholder.slice(2, -1); // 提取变量名，去掉 ${ 和 }
+    const varName = placeholder.slice(2, -1); // Extract the variable name, removing ${ and }
     allVariables[varName] = fields[varName] !== undefined ? fields[varName] : 'N/A';
   });
-  // 合并用户现有的字段和模板中可能缺失的字段
+  // Merge the user's existing fields with fields that may be missing from the template
   const safeFields = {...fields, ...allVariables};
-  // 安全解析模板
+  // Safely parse the template
   return new Function(...Object.keys(safeFields), `return \`${template}\`;`)(...Object.values(safeFields));
 }
 
@@ -193,8 +193,8 @@ function createWatermarkDiv(content, {
 }
 
 export function canvasWaterMark({
-                                  // 使用 ES6 的函数默认值方式设置参数的默认取值
-                                  // 具体参见 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Default_parameters
+                                  // Use ES6 default parameter syntax to set default values for parameters
+                                  // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
                                   container = document.body,
                                   content = 'JumpServer',
                                   settings = {}
@@ -204,11 +204,11 @@ export function canvasWaterMark({
   const watermarkDiv = res.watermark;
   container.insertBefore(watermarkDiv, container.firstChild);
 
-  // 监听 dom 节点的 style 属性变化
+  // Listen for style attribute changes on the dom node
   const observer = new MutationObserver(mutations => {
     setTimeout(() => {
       container.removeChild(container.firstChild);
-      // 这里不用再新建了，因为下面监听了 container 的子节点变化，会重新创建的
+      // No need to create it again here, because the container's child node changes are watched below and it will be recreated
       // canvasWaterMark({container, content, settings});
     }, 100);
   });
@@ -287,7 +287,7 @@ export function formatDate(date: Date) {
   const pad = (n) => n.toString().padStart(2, '0');
 
   const year = date.getFullYear();
-  const month = pad(date.getMonth() + 1); // 月份从0开始
+  const month = pad(date.getMonth() + 1); // month is 0-based
   const day = pad(date.getDate());
   const hours = pad(date.getHours());
   const minutes = pad(date.getMinutes());
@@ -299,7 +299,7 @@ export function formatDate(date: Date) {
 export const LOCAL_CLIENT_REMINDER_STORAGE_KEY = 'ignoreDownloadClientReminder';
 
 /**
- * 通过自定义协议拉起本地客户端，并根据页面是否失焦/隐藏来近似判断协议是否被处理。
+ * Launch the local client via a custom protocol, and approximately determine whether the protocol was handled based on whether the page loses focus/is hidden.
  * @param {string} url
  */
 export function launchLocalApp(url): Promise<boolean> {
@@ -359,7 +359,7 @@ export function launchLocalApp(url): Promise<boolean> {
 }
 
 /**
- * 打开新页卡
+ * Open a new tab
  * @param {Object} node
  * @param {String} newWindowMode
  */
@@ -367,7 +367,7 @@ export function connectOnNewPage(node: TreeNode, newWindowMode?: string) {
   const url = withAppBase(`/connect?login_to=${node.id}&type=${node.meta.type}`);
   let params = 'toolbar=yes,scrollbars=yes,resizable=yes';
 
-  // auto 模式:尺寸为屏幕的三分之一并根据会话内的计数在屏幕上“级联/平铺”位置
+  // auto mode: size is one third of the screen, “cascaded/tiled” position on screen based on the count within the session
   if (newWindowMode === 'auto') {
     let count: number;
     let top = 50;
@@ -382,7 +382,7 @@ export function connectOnNewPage(node: TreeNode, newWindowMode?: string) {
     top = 50 + count * 50;
 
     if (left + screen.width / 3 > screen.width) {
-      // 支持两排足以
+      // Supporting two rows is enough
       top = screen.height / 3;
       count = 1;
       left = 100;
@@ -393,7 +393,7 @@ export function connectOnNewPage(node: TreeNode, newWindowMode?: string) {
 
     window.open(url, '_blank', params);
 
-    // auto 模式:尺寸为当前窗口的 innerWidth x innerHeight;位置固定在 top=50,left=100
+    // auto mode: size is the current window's innerWidth x innerHeight; position fixed at top=50,left=100
   } else if (newWindowMode === 'new') {
     params = params + `,top=50,left=100,width=${window.innerWidth},height=${window.innerHeight}`;
     window.open(url, '_blank', params);

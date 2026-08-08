@@ -153,10 +153,10 @@ export class ElementConnectorMagnusComponent implements OnInit {
     if (!newConnectToken) {
       return;
     }
-    // 更新当前 view 的 connectToken
+    // Update the connectToken of the current view
     this.view.connectToken = newConnectToken;
     await this.ngOnInit();
-    // 刷新完成隐藏密码
+    // Hide the password once the refresh is complete
     this.passwordShow = this.passwordMask;
   }
 }

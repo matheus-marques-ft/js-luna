@@ -168,7 +168,7 @@ class SSHws(ProxyNamespace):
         self.socketio.start_background_task(proxy)
 
     def on_token(self, message):
-        # 此处获取token含有的主机的信息
+        # Get the host info contained in the token here
         logger.debug("On connectToken trigger")
         token = message.get('connectToken', None)
         secret = message.get('secret', None)

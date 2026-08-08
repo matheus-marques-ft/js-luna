@@ -134,7 +134,7 @@ export class ElementReplayGuacamoleComponent
         }
       });
 
-      // 监听容器尺寸变化，避免侧栏展开/收起或布局变化时未触发 window.resize 的情况
+      // Watch the container size for changes, to avoid missing a resize when the sidebar expands/collapses or the layout changes without triggering window.resize
       if ('ResizeObserver' in window && this.screenRef) {
         this.resizeObserver = new (window as any).ResizeObserver(() => {
           this.applyScaleWithRetry(100);
@@ -142,7 +142,7 @@ export class ElementReplayGuacamoleComponent
         try {
           this.resizeObserver.observe(this.screenRef);
         } catch (e) {
-          // 忽略观察器异常
+          // Ignore observer exceptions
         }
       }
 
@@ -328,7 +328,7 @@ export class ElementReplayGuacamoleComponent
       }
 
       const containerRect = this.screenRef.getBoundingClientRect();
-      const availableWidth = containerRect.width - 32; // 减去padding
+      const availableWidth = containerRect.width - 32; // Subtract padding
       const availableHeight = containerRect.height - 32;
 
       if (availableWidth <= 0 || availableHeight <= 0) {
@@ -337,7 +337,7 @@ export class ElementReplayGuacamoleComponent
 
       const widthScale = availableWidth / width;
       const heightScale = availableHeight / height;
-      // 允许放大以自适应容器
+      // Allow scaling up to fit the container
       scale = Math.min(widthScale, heightScale);
     }
     return scale;
@@ -393,7 +393,7 @@ export class ElementReplayGuacamoleComponent
     if (!this.recording.isPlaying()) {
       this.recording.play();
       this.isPlaying = true;
-      // 延迟应用缩放，确保播放状态已更新
+      // Delay applying the scale to ensure the playback state has been updated
       this.applyScaleWithRetry(100);
     }
   }
@@ -429,7 +429,7 @@ export class ElementReplayGuacamoleComponent
         this.commands = this.commands.concat(results);
       },
       err => {
-        alert('没找到命令记录');
+        alert('No command records found');
       }
     );
   }
@@ -470,7 +470,7 @@ export class ElementReplayGuacamoleComponent
     });
 
     screen.addEventListener('touchmove', (e: TouchEvent) => {
-      // 防止页面滚动
+      // Prevent page scrolling
       if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
         e.preventDefault();
       }
@@ -485,19 +485,19 @@ export class ElementReplayGuacamoleComponent
       const deltaY = touchEndY - touchStartY;
       const deltaTime = touchEndTime - touchStartTime;
 
-      // 点击判定
+      // Detect a tap
       if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 200) {
         this.toggle();
       }
 
-      // 左右滑动判定
+      // Detect a left/right swipe
       if (Math.abs(deltaX) > 50 && Math.abs(deltaY) < 30) {
-        const seekTime = 5000; // 5秒
+        const seekTime = 5000; // 5 seconds
         if (deltaX > 0) {
-          // 向右滑动，前进
+          // Swipe right, seek forward
           this.percent = Math.min(this.percent + seekTime, this.max);
         } else {
-          // 向左滑动，后退
+          // Swipe left, seek backward
           this.percent = Math.max(this.percent - seekTime, 0);
         }
         this.runFrom();

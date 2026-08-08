@@ -100,7 +100,7 @@ export class ElementConnectDialogComponent implements OnInit {
 
       this.protocol = this.protocols.find(p => p.name === preProtocol.name) || this.protocols[0];
 
-      // 找到预选择的账号，但不直接设置，让 select-account 组件处理
+      // Find the preselected account, but don't set it directly — let the select-account component handle it
       const preSelectedAccount = this.accounts.find(
         a => a.alias === this.preConnectData.account.alias
       );

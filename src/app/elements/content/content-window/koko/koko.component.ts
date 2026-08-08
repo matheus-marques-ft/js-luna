@@ -10,7 +10,7 @@ import {
 import { User } from '@app/globals';
 import { Command, InfoItem } from '../guide/model';
 import { joinEndpointUrl } from '@app/utils/path';
-// 多子目录方案（保留备用）：site prefix 相关工具
+// multi-subdirectory approach (kept as fallback): site prefix related utilities
 // import { getSitePrefix, joinEndpointUrl, withSitePrefix } from '@app/utils/path';
 
 @Component({
@@ -153,7 +153,7 @@ export class ElementConnectorKokoComponent implements OnInit {
     }
   }
 
-  // dev 方案（当前生效）
+  // dev approach (currently in effect)
   generateNodeConnectUrl() {
     const params = {};
     params['disableautohash'] = this.view.getConnectOption('disableautohash');
@@ -182,7 +182,7 @@ export class ElementConnectorKokoComponent implements OnInit {
     );
   }
 
-  // 多子目录方案（保留备用）：site prefix + URLSearchParams 重写
+  // multi-subdirectory approach (kept as fallback): rewritten with site prefix + URLSearchParams
   // generateNodeConnectUrl() {
   //   const params = new URLSearchParams({
   //     token: this.view.connectToken.id,

@@ -20,9 +20,9 @@ export class DrawerStateService {
   public state$ = this.stateSubject.asObservable();
 
   constructor(private viewService: ViewService) {
-    // 订阅视图状态变化
+    // Subscribe to view state changes
     this.viewService.state$.subscribe(evt => {
-      // 根据视图状态更新抽屉状态
+      // Update drawer state based on view state
       this.updateDrawerState(evt);
     });
   }
@@ -40,7 +40,7 @@ export class DrawerStateService {
   }
 
   updateDrawerState(evt: any): void {
-    // 根据视图状态更新抽屉状态
+    // Update drawer state based on view state
     if (evt.action === 'active') {
       this.sendComponentMessage({
         name: 'TAB_VIEW_CHANGE',

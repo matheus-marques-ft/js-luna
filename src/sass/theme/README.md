@@ -1,24 +1,24 @@
-# 主题系统
+# Theme System
 
-## 简介
+## Introduction
 
-主题系统用于管理应用的颜色方案，提供了一套简单的方式来定义和应用主题。每个主题只定义一个主色（基于 `--el-main-bg-color` 的值），其他颜色通过颜色处理函数基于主色生成。
+The theme system manages the app's color scheme, providing a simple way to define and apply themes. Each theme only defines a single main color (based on the value of `--el-main-bg-color`); every other color is generated from the main color via color-processing functions.
 
-## 主题结构
+## Theme Structure
 
-主题系统由以下几个部分组成：
+The theme system is made up of the following parts:
 
-1. **主题颜色定义**：在 `themes.ts` 中集中定义所有主题的主色，主色值来源于原始配置中的 `--el-main-bg-color` 值。
+1. **Theme color definitions**: all themes' main colors are defined centrally in `themes.ts`, with the main color value sourced from the `--el-main-bg-color` value in the original config.
 
-2. **颜色处理函数**：在 `interface/index.ts` 中定义，包括 `lighten`, `darken`, `saturate`, `desaturate`, `alpha` 等函数，用于基于主色生成不同明暗度和透明度的颜色。
+2. **Color-processing functions**: defined in `interface/index.ts`, including `lighten`, `darken`, `saturate`, `desaturate`, `alpha`, etc., used to generate colors of varying lightness and opacity based on the main color.
 
-3. **主题文件**：每个区域有一个对应的主题文件，如 `main.ts`, `menu.ts`, `header.ts`, `dropdown.ts`，每个文件定义了该区域的 CSS 变量，大部分颜色都基于主色生成，少数特殊颜色使用固定值。
+3. **Theme files**: each area has a corresponding theme file, such as `main.ts`, `menu.ts`, `header.ts`, `dropdown.ts`. Each file defines the CSS variables for that area — most colors are derived from the main color, with a few special colors using fixed values.
 
-## 使用方法
+## Usage
 
-### 颜色处理函数
+### Color-processing functions
 
-颜色处理函数可以接受一个或两个参数：
+The color-processing functions accept one or two parameters:
 
 ```typescript
 function lighten(amount: number, color?: string, alphaValue?: number): string;
@@ -28,83 +28,83 @@ function desaturate(amount: number, color?: string): string;
 function alpha(amount: number, color?: string): string;
 ```
 
-- `amount`: 处理的程度，对于 lighten 和 darken，表示百分比（0-100）；对于 alpha，表示透明度（0-1）
-- `color`: 基础颜色（可选）。如果不提供，函数会自动使用当前主题的主色
-- `alphaValue`: 透明度值（可选，仅 lighten 和 darken 支持）。取值范围 0-1，用于同时调整亮度和透明度
+- `amount`: the degree of adjustment. For lighten and darken, a percentage (0-100); for alpha, the opacity (0-1)
+- `color`: the base color (optional). If not provided, the function automatically uses the current theme's main color
+- `alphaValue`: opacity value (optional, only supported by lighten and darken). Range 0-1, used to adjust brightness and opacity at the same time
 
-### 示例
+### Example
 
 ```typescript
 import { lighten, darken } from "./interface/index";
 
-// 主题对象
+// Theme object
 export const mainTheme = {
-  // 主区域背景
-  "--el-main-bg-color": darken(10), // 自动使用当前主题颜色
-  // 带透明度的元素
-  "--el-overlay-bg-color": darken(5, undefined, 0.8), // 80% 不透明度
-  // 主区域文本颜色
+  // Main area background
+  "--el-main-bg-color": darken(10), // automatically uses the current theme color
+  // Elements with opacity
+  "--el-overlay-bg-color": darken(5, undefined, 0.8), // 80% opacity
+  // Main area text color
   "--el-text-color-light": "#EFEFF0",
-  // 其他 CSS 变量...
+  // Other CSS variables...
 };
 ```
 
-## 添加新主题
+## Adding a New Theme
 
-要添加新的主题类型，只需在 `themes.ts` 文件中的 `themes` 对象中添加新的主题颜色：
+To add a new theme type, just add a new theme color to the `themes` object in `themes.ts`:
 
 ```typescript
-// 在 themes.ts 中添加新主题
+// Add a new theme in themes.ts
 export const themes = {
   default: "#1E1C1C",
   darkBlue: "#141618",
-  newTheme: "#YOUR_COLOR", // 添加新主题
+  newTheme: "#YOUR_COLOR", // add the new theme
 };
 ```
 
-然后在 `useTheme.ts` 中的 `switchTheme` 函数中添加对新主题的支持：
+Then add support for the new theme in the `switchTheme` function in `useTheme.ts`:
 
 ```typescript
 const switchTheme = () => {
   if (ThemeType === "darkBlue") {
     html.setAttribute("class", "darkBlue");
   } else if (ThemeType === "newTheme") {
-    // 添加新主题的处理
+    // handle the new theme
     html.setAttribute("class", "newTheme");
   } else {
     html.setAttribute("class", "");
   }
 
-  // 应用所有主题
+  // Apply all themes
   initTheme();
 };
 ```
 
-## 颜色调整指南
+## Color Adjustment Guide
 
-在调整主题颜色时，可以参考以下指南：
+When adjusting theme colors, consider the following guidelines:
 
-1. **主色选择**：主色应该选择一个适合作为背景的深色，如 `#1E1C1C`（default 主题）或 `#141618`（darkBlue 主题）。
+1. **Choosing a main color**: the main color should be a dark shade suitable as a background, such as `#1E1C1C` (default theme) or `#141618` (darkBlue theme).
 
-2. **亮度调整**：
+2. **Brightness adjustment**:
 
-   - 对于比主色更亮的区域，使用 `lighten` 函数，如 `lighten(20)`
-   - 对于比主色更暗的区域，使用 `darken` 函数，如 `darken(10)`
-   - 调整 `amount` 参数可以控制亮度变化的程度
+   - For areas that should be lighter than the main color, use the `lighten` function, e.g. `lighten(20)`
+   - For areas that should be darker than the main color, use the `darken` function, e.g. `darken(10)`
+   - Adjusting the `amount` parameter controls how much the brightness changes
 
-3. **特殊颜色**：对于一些特殊的颜色，如文本颜色、强调色等，可以使用固定的颜色值，如 `#EFEFF0`、`#7494f3` 等。
+3. **Special colors**: for certain special colors, such as text colors or accent colors, fixed color values can be used, e.g. `#EFEFF0`, `#7494f3`, etc.
 
-## 优势
+## Advantages
 
-- **极简设计**：每个主题只需定义一个主色，大大简化了主题配置
-- **一致性**：所有区域的颜色都基于同一个主色生成，确保视觉一致性
-- **易于扩展**：添加新主题只需添加一个新的颜色值，无需为每个区域单独配置颜色
-- **灵活性**：通过颜色处理函数，可以基于主色生成各种不同明暗度和透明度的颜色
-- **接近原始设计**：通过调整颜色处理函数的参数，可以使生成的颜色接近原始设计的颜色
-- **简化使用**：颜色处理函数现在可以自动获取当前主题颜色，无需手动传入
+- **Minimalist design**: each theme only needs to define a single main color, greatly simplifying theme configuration
+- **Consistency**: colors across all areas are derived from the same main color, ensuring visual consistency
+- **Easy to extend**: adding a new theme only requires adding one new color value, with no need to configure colors for each area individually
+- **Flexibility**: color-processing functions can generate a variety of different lightness/opacity variations based on the main color
+- **Close to the original design**: adjusting the color-processing functions' parameters lets generated colors stay close to the original design's colors
+- **Simplified usage**: color-processing functions can now automatically retrieve the current theme color, without needing to pass it in manually
 
-## 切换主题
+## Switching Themes
 
-目前，主题切换通过在 HTML 根元素上设置 class 来实现。在 `useTheme.ts` 中的 `switchTheme` 函数处理这个逻辑。
+Currently, theme switching is implemented by setting a class on the HTML root element. The `switchTheme` function in `useTheme.ts` handles this logic.
 
-如果需要添加新的主题类型，可以修改 `switchTheme` 函数来支持新的主题类型。
+If you need to add a new theme type, you can modify the `switchTheme` function to support the new theme type.

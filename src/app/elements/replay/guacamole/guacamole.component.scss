@@ -325,12 +325,12 @@ input[type="range"]:focus::-ms-fill-upper {
       min-height: 200px;
       padding: 0;
 
-      // 隐藏左侧命令列表
+      // Hide the left-side command list
       as-split-area[order="0"] {
         display: none;
       }
 
-      // 视频区域自适应
+      // Adapt the video area to fit
       as-split-area[order="1"] {
         width: 100% !important;
         max-width: 100% !important;

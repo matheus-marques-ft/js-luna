@@ -176,7 +176,7 @@ export class ElementContentComponent implements OnInit, OnDestroy {
 
     const index = this.viewList.indexOf(view);
     if (view.active) {
-      // 如果关掉的是最后一个, 存在上一个
+      // If the one being closed is the last one, fall back to the previous one
       if (index === this.viewList.length - 1 && index !== 0) {
         nextActiveView = this.viewList[index - 1];
       } else if (index < this.viewList.length) {
@@ -344,7 +344,7 @@ export class ElementContentComponent implements OnInit, OnDestroy {
       ele.msRequestFullscreen;
 
     if (!requestFullscreen) {
-      throw new Error('不支持全屏api');
+      throw new Error('Fullscreen API not supported');
     }
 
     requestFullscreen.call(ele);

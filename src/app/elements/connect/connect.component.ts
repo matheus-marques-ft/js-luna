@@ -118,7 +118,7 @@ export class ElementConnectComponent implements OnInit, OnDestroy {
 
   /**
    * @param asset
-   * @param splitConnect 是否分屏连接
+   * @param splitConnect whether to split-connect
    */
   async connectAsset(asset: Asset, splitConnect = false) {
     if (!asset) {
@@ -246,7 +246,7 @@ export class ElementConnectComponent implements OnInit, OnDestroy {
     if (this.direct) {
       return true;
     }
-    // 验证账号是否有效
+    // Verify the account is valid
     const preAccount = preData.account;
     const account = accounts.find(item => {
       return item.alias === preAccount.alias;
@@ -257,7 +257,7 @@ export class ElementConnectComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    // 验证登录信息
+    // Verify login info
     const preAuth = preData.manualAuthInfo;
 
     if (!account.has_secret && (!preAuth || !preAuth.secret)) {
@@ -265,7 +265,7 @@ export class ElementConnectComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    // 验证连接方式
+    // Verify connect method
     const connectMethods = this._appSvc.getProtocolConnectMethods(preData.protocol.name);
     if (!connectMethods) {
       this._logger.debug('No matched connect types');

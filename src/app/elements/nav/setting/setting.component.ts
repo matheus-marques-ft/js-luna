@@ -120,7 +120,7 @@ export class ElementSettingComponent implements OnInit, OnDestroy {
 
   onThemePreview(event: KeyboardEvent) {
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      // 延迟一个 tick，等待内部 overlay 弹出并高亮变更
+      // Delay by one tick, waiting for the internal overlay to pop up and the highlight to change
       setTimeout(() => {
         const activatedValue = (this.nzSel as any).activatedValue;
         this.onThemeChange(activatedValue);

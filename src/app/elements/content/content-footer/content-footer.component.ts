@@ -180,7 +180,7 @@ export class ElementContentFooterComponent implements OnInit, OnDestroy {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
     if (event.ctrlKey && event.key.toLowerCase() === 'enter') {
-      event.preventDefault(); // 阻止默认保存行为
+      event.preventDefault(); // Prevent the default save behavior
       this.sendBatchCommand();
     }
   }

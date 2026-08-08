@@ -507,7 +507,7 @@ export class Endpoint {
     ];
     let port = magnusProtocols.includes(_protocol) ? this.magnus_port : this[_protocol + '_port'];
 
-    // 处理 http(s) 协议的后台端口为0的时候, 使用当前地址中的端口
+    // Handle the case where the backend port for the http(s) protocol is 0, use the port in the current address
     if (['http', 'https'].indexOf(_protocol) !== -1 && port === 0) {
       port = window.location.port;
     }

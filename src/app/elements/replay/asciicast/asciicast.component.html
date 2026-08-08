@@ -1,5 +1,5 @@
 <div class="replay-container">
-  <!-- 信息头部 -->
+  <!-- Info header -->
   <div class="info-header">
     <div class="info-controls">
       <button class="control-btn" (click)="speedDown()">
@@ -40,14 +40,14 @@
     </div>
   </div>
 
-  <!-- 主体内容 -->
+  <!-- Main content -->
   <div class="main-content">
-    <!-- 终端显示区 -->
+    <!-- Terminal display area -->
     <div class="terminal-area">
       <div id="screen"></div>
     </div>
 
-    <!-- 命令列表 -->
+    <!-- Command list -->
     @if (commands && commands.length > 0) {
       <div class="commands-area">
         <div class="commands-header">

@@ -23,69 +23,69 @@ export const themeColors: any = themes.reduce((acc, theme) => {
   return acc;
 }, {});
 
-// 简化后的主题对象
+// Simplified theme object
 export const mainTheme = () => {
   return {
-    // 全局
+    // Global
     '--el-text-color-dark': '#000000d9',
     '--el-text-color-light': '#EFEFF0',
-    // 滚动条的滚动块背景
+    // Scrollbar thumb background
     '--el-scroll-bar-thumb-bg-color': lighten(10),
-    // 滚动条轨道背景
+    // Scrollbar track background
     '--el-scroll-bar-track-bg-color': darken(10),
-    // 头部 tab icon 颜色
+    // Header tab icon color
     '--el-icon-color': '#ffffff',
-    // icon hover 时的颜色
+    // Icon color on hover
     '--el-icon-hover-color': '#d6cbcb',
     // '--el-border-color-x': darken(30, '#000000', 0.4),
     // '--el-border-color-y': darken(30, '#000000', 0.4),
     '--el-border-color-x': 'rgba(0, 0, 0, 0.3)',
     '--el-border-color-y': 'rgba(0, 0, 0, 0.3)',
 
-    // 头部导航背景
+    // Header navigation background
     '--el-nav-bg-color': lighten(0),
 
-    // 主content区域背景
+    // Main content area background
     '--el-main-bg-color': darken(13),
-    // 断开连接的标签项背景
+    // Disconnected tab item background
     '--el-tab-deactive-bg-color': lighten(10),
-    // 编辑器背景
+    // Editor background
     '--el-editor-bg-color': darken(2),
-    // 头部 tab item 背景
+    // Header tab item background
     '--el-tab-bg-color': darken(4),
     '--el-tab-sub-bg-color': darken(3),
 
-    // 侧边栏
-    // 侧边栏组织模块背景
+    // Sidebar
+    // Sidebar organization module background
     '--el-org-bg-color': darken(6),
-    // 资产区域背景
+    // Asset area background
     '--el-asset-tree-bg-color': darken(8),
-    // 折叠面板项
+    // Collapse panel item
     '--el-banner-bg-color': darken(4),
-    // icon 颜色
+    // Icon color
     '--el-banner-icon-color': '#CCCCCC',
 
-    // 下拉菜单或select
+    // Dropdown menu or select
     '--el-dropdown-bg-color': '#000000',
-    // 头部导航下拉菜单背景
+    // Header navigation dropdown menu background
     '--el-dropdown-selected-bg-color': lighten(5),
-    // 头部导航下拉菜单 hover 背景
+    // Header navigation dropdown menu hover background
     '--el-dropdown-hover-bg-color': darken(4),
-    // 下拉菜单或select 选中背景
+    // Dropdown menu or select selected background
     '--el-dropdown-active-bg-color': lighten(10),
-    // 抽屉背景
+    // Drawer background
     '--el-drawer-bg-color': darken(1),
-    // 折叠面板背景
+    // Collapse panel background
     '--el-drawer-collapse-bg-color': darken(2),
-    // 分割线颜色
+    // Divider color
     '--el-divider-border-color': lighten(20),
-    // 表单 hover 边框颜色
+    // Form hover border color
     '--el-form-hover-border-color': lighten(20),
-    // 表单 focus 边框颜色
+    // Form focus border color
     '--el-form-focus-border-color': lighten(30),
-    // segmented 背景
+    // Segmented background
     '--el-segmented-bg-color': lighten(5),
-    // segmented hover 背景
+    // Segmented hover background
     '--el-segmented-hover-bg-color': lighten(10)
   };
 };

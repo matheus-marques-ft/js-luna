@@ -40,7 +40,7 @@
             <span nz-icon nzType="close" nzTheme="outline" (click)="handleCloseConnect()"></span>
             <span class="card-title-text">
               @if (getAssetInfo().protocol === 'k8s') {
-                <!-- 只给 K 进行大写 -->
+                <!-- Only capitalize the K -->
                 {{ getAssetInfo().protocol.slice(0, 1).toUpperCase() + getAssetInfo().protocol.slice(1) }}
                 {{ _i18n.instant('Session') }}
               } @else {
@@ -131,7 +131,7 @@
               <span nz-icon nzType="close" nzTheme="outline" (click)="handleCloseConnect()"></span>
               <span class="card-title-text">
                 @if (getAssetInfo().protocol === 'k8s') {
-                  <!-- 只给 K 进行大写 -->
+                  <!-- Only capitalize the K -->
                   {{ getAssetInfo().protocol.slice(0, 1).toUpperCase() + getAssetInfo().protocol.slice(1) }}
                   {{ _i18n.instant('Session') }}
                 } @else {

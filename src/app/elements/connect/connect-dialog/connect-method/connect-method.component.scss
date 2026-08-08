@@ -18,7 +18,7 @@
   width: 70px;
 }
 
-/* Tab 布局优化 - 允许溢出操作但防止闪烁 */
+/* Tab layout optimization - allow overflow actions while preventing flicker */
 .full-width-tabs ::ng-deep {
   .ant-tabs-nav {
     .ant-tabs-nav-wrap {
@@ -52,13 +52,13 @@
       }
     }
 
-    /* 优化溢出操作按钮的显示逻辑 */
+    /* Optimize the display logic of the overflow actions button */
     .ant-tabs-nav-operations {
-      /* 只在真正需要时才显示 */
+      /* Only show when actually needed */
       opacity: 1;
       transition: opacity 0.2s ease;
 
-      /* 当没有溢出时隐藏 */
+      /* Hide when there's no overflow */
       &.ant-tabs-nav-operations-hidden {
         opacity: 0;
         pointer-events: none;

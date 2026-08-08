@@ -136,7 +136,7 @@ export class ElementConnectMethodComponent implements OnInit {
     }
     if (this.account && !this.account.has_secret) {
       const aliases = ['@USER', '@INPUT', '@ANON'];
-      // 同名账号、手动输入可以下载RDP文件
+      // Same-named account or manual input can download RDP file
       if (!aliases.includes(this.account.alias) || !this.manualAuthInfo.username) {
         return false;
       }

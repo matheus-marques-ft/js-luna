@@ -74,7 +74,7 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * 格式化文件大小
+   * Format the file size
    * @param size
    */
   formatFileSize(size: number): string {
@@ -96,7 +96,7 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * 格式化时间
+   * Format the duration
    * @param duration
    */
   formatDuration(duration: number): string {
@@ -131,7 +131,7 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * 获取录像源的逻辑
+   * Logic for fetching the recording source
    *
    * @param item
    * @param sessionId
@@ -140,7 +140,7 @@ export class ElementsPartsComponent implements OnInit {
   async fetchSection(item: IFile, sessionId: string, isFirstPush: boolean): Promise<boolean> {
     let section: Section;
     try {
-      // 取消上一次未完成的请求
+      // Cancel the previous unfinished request
       if (this.partReplaySub) {
         this.partReplaySub.unsubscribe();
       }
@@ -151,7 +151,7 @@ export class ElementsPartsComponent implements OnInit {
       });
 
       if (res) {
-        // 3.5 的 TS 版本无法使用 ?.
+        // TS 3.5 doesn't support ?.
         // @ts-ignore
         const data = res.type ? res : res.resp ? res.resp.data : undefined;
 
@@ -198,7 +198,7 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * 分割 File 对象
+   * Split the File object
    * @param file
    * @param sessionId
    */
@@ -211,7 +211,7 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * 延时执行函数
+   * Delay execution function
    * @param ms
    */
   delay(ms: number) {
@@ -219,7 +219,7 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * @description 获取视频列表
+   * @description Fetch the video list
    *
    * @param file
    * @returns
@@ -239,19 +239,19 @@ export class ElementsPartsComponent implements OnInit {
   }
 
   /**
-   * @description点击列表的回调
+   * @description Callback for clicking a list item
    */
   selectPart(folder: Section) {
     if (!folder || !folder.src) {
       return;
     }
 
-    // 终止未完成的分段请求
+    // Abort the unfinished segment request
     if (this.partReplaySub) {
       this.partReplaySub.unsubscribe();
       this.partReplaySub = null;
     }
-    // 停止列表区域的加载提示
+    // Stop the loading indicator in the list area
     this.alertShown = false;
 
     this.currentVideo = null;

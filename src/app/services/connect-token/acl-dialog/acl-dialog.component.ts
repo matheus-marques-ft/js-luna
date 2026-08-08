@@ -39,7 +39,7 @@ export class ElementACLDialogComponent implements OnInit {
   public error: HttpErrorResponse;
   public otherError: string;
   public ticketAssignees: string = '-';
-  // Token 的行为，创建或者兑换 Token, create, exchange
+  // Token behavior, create or exchange Token: create, exchange
   public tokenAction: string = 'create';
   public tokenID: string;
   public faceVerifyUrl: SafeResourceUrl;
@@ -82,14 +82,14 @@ export class ElementACLDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    // 创建 Token 的时候，需要传入 Asset 和 ConnectInfo
+    // When creating a Token, need to pass in Asset and ConnectInfo
     this.content = this.getDialogContent(this.data.code);
     this.asset = this.data.asset;
     this.connectInfo = this.data.connectInfo;
     this.code = this.data.code;
-    // 兑换 Token 的时候，需要传入 Token ID
+    // When exchanging a Token, need to pass in Token ID
     this.tokenID = this.data.tokenID;
-    // 控制 token 的行为, 创建还是兑换
+    // Control token behavior, create or exchange
     this.tokenAction = this.data.tokenAction;
   }
 
@@ -231,7 +231,7 @@ export class ElementACLDialogComponent implements OnInit {
       if (connToken && connToken.from_ticket) {
         this.connectionToken = connToken;
         this.code = 'ticket_review_pending';
-        this.content = this.getDialogContent(this.code); // 重新生成 content
+        this.content = this.getDialogContent(this.code); // Regenerate content
         this.checkTicket();
       }
     };
@@ -282,7 +282,7 @@ export class ElementACLDialogComponent implements OnInit {
       this._http[checkMethod](checkURL).subscribe(
         async ticket => {
           if (ticket.status.value !== 'closed') {
-            // 工单未关闭
+            // Ticket not closed
             this.ticketAssignees = ticketAssignees;
             this.code = 'ticket_review_pending';
             return;

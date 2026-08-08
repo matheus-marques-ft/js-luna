@@ -21,11 +21,11 @@ export class I18nService {
   }
 
   public initialLang() {
-    // 语言初始化(若未设置语言, 则取浏览器语言)
+    // Language initialization (if no language is set, use the browser language)
     const lang = this.getLangCode();
     this._translate.use(lang);
     this._logger.debug('Lang is: ', lang);
-    // 记录当前设置的语言
+    // Record the currently set language
   }
 
   t(key): Promise<string> {

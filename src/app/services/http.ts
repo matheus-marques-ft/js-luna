@@ -144,7 +144,7 @@ export class HttpService {
     let url = '/api/v1/users/profile/';
     const connectionToken = getQueryParamFromURL('token');
     if (connectionToken) {
-      // 解决 /luna/connect?connectToken= 直接方式权限认证问题
+      // Resolve the permission authentication issue for the /luna/connect?connectToken= direct access method
       url += `?token=${connectionToken}`;
     }
     return this.get<ConnectionToken>(url);
@@ -180,7 +180,7 @@ export class HttpService {
   withRetry() {
     return retry({
       count: 10,
-      delay: 10000 // 每次重试间隔 10 秒（单位毫秒）
+      delay: 10000 // retry interval is 10 seconds each time (in milliseconds)
     });
   }
 
@@ -380,13 +380,13 @@ export class HttpService {
     const username = isVirtual ? manualAuthInfo.username : account.username;
     const secret = encryptPassword(manualAuthInfo.secret);
     const connectOption = { ...(connectData.connectOption || {}) };
-    // 始终以当前表单为准，避免 connectOption 里残留上一次的 input_secret_type
+    // Always use the current form as the source of truth, to avoid connectOption retaining the previous input_secret_type
     const inputSecretType =
       (manualAuthInfo && manualAuthInfo['input_secret_type']) || 'password';
 
     const data = {
       asset: asset.id,
-      account: account.alias, // 主要是有特殊账号，匿名、虚拟
+      account: account.alias, // mainly because there are special accounts: anonymous, virtual
       protocol: protocol.name,
       input_username: username,
       input_secret: secret,

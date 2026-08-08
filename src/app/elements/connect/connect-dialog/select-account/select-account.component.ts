@@ -29,7 +29,7 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
   @Input() onSubmit$: BehaviorSubject<boolean>;
   @Input() manualAuthInfo: AuthInfo;
   @Input() protocol: Protocol;
-  @Input() preSelectedAccount: Account; // 接收父组件传入的预选择账号
+  @Input() preSelectedAccount: Account; // Receives the preselected account passed in from the parent component
   @Output() accountSelectedChange: EventEmitter<Account> = new EventEmitter<Account>();
   @Output() manualUsernameChanged: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('username', { static: false }) usernameRef: ElementRef;
@@ -45,13 +45,13 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
   filteredOptions: AuthInfo[];
   accountManualAuthInit = false;
   usernamePlaceholder: string = '';
-  public accountSelected: Account; // 内部状态
+  public accountSelected: Account; // Internal state
   public groupedAccounts: AccountGroup[];
   public accountCtl: FormControl = new FormControl();
   public accountFilterCtl: FormControl = new FormControl();
   public filteredUsersGroups: ReplaySubject<AccountGroup[]> = new ReplaySubject<AccountGroup[]>(1);
   protected _onDestroy = new Subject<void>();
-  private userManuallySelected = false; // 标记用户是否手动选择了账号
+  private userManuallySelected = false; // Flags whether the user manually selected an account
 
   constructor(
     private _settingSvc: SettingService,
@@ -128,22 +128,22 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
-    // 重置用户手动选择标志
+    // Reset the user-manually-selected flag
     this.userManuallySelected = false;
 
-    // 如果父组件传入了预选择账号，使用父组件传入的
+    // If the parent component passed in a preselected account, use it
     if (this.preSelectedAccount) {
       this.accountSelected = this.preSelectedAccount;
     }
 
-    // 先检查URL参数，这个优先级最高
+    // Check the URL parameter first, it has the highest priority
     this.checkUrlForLoginAccountParam();
 
-    // 然后分组账号（如果URL没有指定账号，会设置默认账号）
+    // Then group accounts (if the URL doesn't specify an account, a default one will be set)
     this.groupedAccounts = this.groupAccounts();
     this.filteredUsersGroups.next(this.groupedAccounts.slice());
 
-    // 确保账号对象引用一致
+    // Make sure the account object reference is consistent
     this.ensureAccountReference();
 
     if (this.accountSelected) {
@@ -164,7 +164,7 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
   }
 
   handleAccountChanged(newAccount?: Account) {
-    // 如果传入了新账号，使用新账号；否则使用当前账号
+    // If a new account was passed in, use it; otherwise use the current account
     const selectedAccount = newAccount || this.accountSelected;
 
     this.accountSelected = selectedAccount;
@@ -229,19 +229,19 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
 
     groups = groups.filter(group => group.accounts.length > 0);
 
-    // 优先级：
-    // 1. 如果用户已经手动选择了账号，保持不变
-    // 2. 如果已经有选中的账号但不是用户手动选择的，可以被覆盖
-    // 3. 如果父组件传入了预选择账号，使用它
-    // 4. 否则使用第一个可用账号作为默认
+    // Priority:
+    // 1. If the user has already manually selected an account, leave it unchanged
+    // 2. If there's already a selected account but not user-selected, it can be overridden
+    // 3. If the parent component passed in a preselected account, use it
+    // 4. Otherwise use the first available account as the default
     if (this.userManuallySelected && this.accountSelected) {
-      // 用户手动选择的账号，保持不变
+      // User manually selected account, leave it unchanged
     } else if (!this.accountSelected) {
       if (this.preSelectedAccount) {
-        // 使用父组件传入的预选择账号
+        // Use the preselected account passed in from the parent component
         this.accountSelected = this.preSelectedAccount;
       } else {
-        // 使用第一个可用账号作为默认
+        // Use the first available account as the default
         for (const group of groups) {
           if (group.accounts.length > 0) {
             this.accountSelected = group.accounts[0];
@@ -323,7 +323,7 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
     this.manualAuthInfo.secret = '';
     this.passwordSecret = '';
     this.sshKeySecret = '';
-    // 切换账号时先回到默认类型，再由本地缓存 merge 覆盖（避免沿用上一账号的 ssh_key）
+    // When switching accounts, reset to the default type first, then let the local cache merge override it (avoids carrying over the previous account's ssh_key)
     this.manualAuthInfo['input_secret_type'] = 'password';
     this.localAuthItems = this._appSvc.getAccountLocalAuth(this.asset.id);
     if (this.manualAuthInfo.username) {
@@ -449,7 +449,7 @@ export class ElementSelectAccountComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // 在分组中查找匹配的账号对象
+    // Find the matching account object among the groups
     for (const group of this.groupedAccounts) {
       const foundAccount = group.accounts.find(
         account => account.alias === this.accountSelected.alias

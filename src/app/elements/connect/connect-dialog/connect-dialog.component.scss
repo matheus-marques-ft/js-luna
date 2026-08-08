@@ -12,8 +12,8 @@
     width: 85vw !important;
     margin: 8px auto;
     top: 10px;
-    transform: scale(0.8); /* 缩放整个 div，包括文字、图片等 */
-    transform-origin: center center; /* 从左上角缩放（可选） */
+    transform: scale(0.8); /* Scale the whole div, including text, images, etc. */
+    transform-origin: center center; /* Scale from the top-left corner (optional) */
 
     .ant-modal-body {
       max-height: calc(100vh - 30px);

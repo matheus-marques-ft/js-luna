@@ -37,7 +37,7 @@ export class AppService {
   private connectMethodsRequestSeq = 0;
   private connectMethodsAppliedSeq = 0;
   private checkIntervalId: number;
-  private newLoginHasOpen = false; // 避免多次打开新登录页
+  private newLoginHasOpen = false; // Avoid opening the new login page multiple times
   private checkSecond = 120;
 
   constructor(
@@ -60,7 +60,7 @@ export class AppService {
   }
 
   setLogLevel() {
-    // 设置logger level
+    // Set logger level
     let logLevel = this._cookie.get('logLevel');
     if (!logLevel) {
       logLevel = environment.production ? '1' : '5';
@@ -98,7 +98,7 @@ export class AppService {
         status = 'ok';
         User.logined = true;
       } catch (err) {
-        status = 'error'; // 默认错误状态
+        status = 'error'; // default error status
         if (err.status === 401) {
           status = 'unauthorized';
         } else if (err.status === 400) {
@@ -181,7 +181,7 @@ export class AppService {
       return;
     }
 
-    // Connection connectToken 方式不用检查过期了
+    // No need to check expiration for the connectToken connection method
     const token = this.getQueryString('token');
 
     this._http.getUserProfile().then(
@@ -220,14 +220,15 @@ export class AppService {
     const url = '/api/v1/terminal/components/connect-methods/';
     const requestSeq = ++this.connectMethodsRequestSeq;
 
-    // 当用户先打开 luna 并进行操作时如果后在 lina 中去设置连接方式的 ACL 此时并不生效，因此修改为在 toPromise 后直接赋值
+    // If the user opens luna and performs actions first, then later sets the connect method ACL in lina, it does not take effect,
+    // so this was changed to assign directly after toPromise
     return this._http
       .get(url)
       .toPromise()
       .then(response => {
-        // 每次发起请求都自增 connectMethodsRequestSeq，记录当前请求序号 requestSeq
-        // 响应回来时，如果 requestSeq 小于已经应用过的 connectMethodsAppliedSeq，说明这是“过期响应”，直接丢弃
-        // 只有最新的响应才会更新 protocolConnectTypesMap，并把 connectMethodsAppliedSeq 同步为最新
+        // Increment connectMethodsRequestSeq every time a request is made, recording the current request sequence number requestSeq
+        // When the response comes back, if requestSeq is less than the already-applied connectMethodsAppliedSeq, this is a “stale response” and is discarded directly
+        // Only the latest response updates protocolConnectTypesMap, and syncs connectMethodsAppliedSeq to the latest value
         if (requestSeq < this.connectMethodsAppliedSeq) {
           return;
         }

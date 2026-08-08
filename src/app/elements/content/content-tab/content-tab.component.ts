@@ -48,12 +48,12 @@ export class ElementContentTabComponent implements OnInit, OnChanges {
       this.clickTimeout = null;
     }
 
-    // 点击时需要额外确定当前是否是在编辑状态
+    // On click, we need to additionally check whether it is currently in edit state
     if (this.view.editable) {
       return;
     }
 
-    // 延迟300毫秒，检查是否有双击事件
+    // Delay 300ms to check whether a double-click event occurs
     this.clickTimeout = setTimeout(() => {
       const action = new ViewAction(this.view, 'active');
       this.onAction.emit(action);

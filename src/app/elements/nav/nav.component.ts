@@ -70,7 +70,7 @@ export class ElementNavComponent implements OnInit {
         id: 'View',
         name: 'View',
         children: [
-          // 此处直接使用空串的话，在渲染时会被 nif 判断为 false 从而只有禁用效果而不展示文字内容
+          // Using an empty string directly here would be evaluated as false by nif during rendering, resulting in only the disabled effect without showing the text content
           {
             id: 'FullScreen',
             click: () => {
@@ -87,7 +87,7 @@ export class ElementNavComponent implements OnInit {
               } else if (ele.webkitRequestFullscreen) {
                 ele.webkitRequestFullScreen();
               } else {
-                throw new Error('不支持全屏api');
+                throw new Error('Fullscreen API not supported');
               }
               window.dispatchEvent(new Event('resize'));
             },

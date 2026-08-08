@@ -10,11 +10,12 @@
   <base href="/luna/">
   <script>
     /**
-     * 多子目录方案（保留备用）核心逻辑：
-     * 1. 动态计算前缀（Site Prefix）。
-     * 2. 使用 document.write 同步写入 <base> 标签。
-     * 这能确保浏览器在解析后续的 link/script 标签前，base 路径已经生效，
-     * 从而避免预解析器（Pre-parser）发起不带前缀的错误请求。
+     * Core logic of the multi-subdirectory scheme (kept as a fallback):
+     * 1. Dynamically compute the prefix (Site Prefix).
+     * 2. Use document.write to synchronously write the <base> tag.
+     * This ensures the base path is already in effect before the browser parses
+     * subsequent link/script tags, avoiding the pre-parser issuing incorrect
+     * requests without the prefix.
      */
     (function () {
       var pathname = window.location.pathname || '/';
@@ -22,7 +23,7 @@
       var idx = pathname.indexOf(marker);
       var prefix = '';
 
-      // 处理路径匹配
+      // Handle path matching
       if (idx === -1 && /\/luna$/.test(pathname)) {
         idx = pathname.length - '/luna'.length;
       }
@@ -33,17 +34,17 @@
 
       prefix = prefix.replace(/\/+$/, '');
 
-      // 设置全局变量供业务代码使用
+      // Set global variables for use by application code
       window.__BASE_PATH__ = prefix;
       window.__UI_BASE__ = prefix + '/ui/';
       window.__LUNA_BASE__ = prefix + marker;
 
-      // dev 方案（当前生效）：动态设置已有 <base> 标签的 href
+      // dev scheme (currently active): dynamically set the href of the existing <base> tag
       var baseElement = document.querySelector('base');
       if (baseElement) {
         baseElement.setAttribute('href', window.__LUNA_BASE__);
       }
-      // 多子目录方案（保留备用）：同步写入 base 标签，防止浏览器预加载“抢跑”
+      // Multi-subdirectory scheme (kept as a fallback): synchronously write the base tag to prevent the browser from preloading ahead of time
       // document.write('<base href="' + window.__LUNA_BASE__ + '">');
     })();
   </script>
@@ -95,7 +96,7 @@
   if (navigator.keyboard && navigator.keyboard.lock) {
     navigator.keyboard.lock(['Escape']);
   } else {
-    console.log('浏览器不支持 ESC 长摁退出功能')
+    console.log('Browser does not support the ESC long-press-to-exit feature')
   }
   window.onload = async function (ev) {
     let clipboardData = "";
@@ -103,12 +104,12 @@
     if (!document.hasFocus()) return
 
     try {
-      // 读取粘贴板内容
+      // Read clipboard content
       if (navigator.clipboard && navigator.clipboard.readText) {
         clipboardData = await navigator.clipboard.readText()
       }
 
-      // 写回内容
+      // Write the content back
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(clipboardData);
       }

@@ -578,10 +578,10 @@ export class ElementAssetTreeComponent implements OnInit {
   async initAssetTree(refresh = false) {
     const config = {
       refresh,
-      // dev 方案（当前生效）：直接使用原始接口地址
+      // dev approach (currently in effect): use the raw API endpoint directly
       url: '/api/v1/perms/users/self/nodes/all-with-assets/tree/',
       asyncUrl: '/api/v1/perms/users/self/nodes/children-with-assets/tree/?'
-      // 多子目录方案（保留备用）：site prefix 包裹 + showFavoriteAssets
+      // multi-subdirectory approach (kept as fallback): wrap with site prefix + showFavoriteAssets
       // showFavoriteAssets: true,
       // url: withSitePrefix('/api/v1/perms/users/self/nodes/all-with-assets/tree/'),
       // asyncUrl: withSitePrefix('/api/v1/perms/users/self/nodes/children-with-assets/tree/?')

@@ -46,7 +46,7 @@ export class ElementContentWindowComponent implements OnInit, DoCheck {
     const iterableChanges = this.iterableDiffer.diff(this.view.subViews);
 
     if (iterableChanges && iterableChanges.collection.length > 1) {
-      // subViews 数组发生变化
+      // subViews array has changed
       iterableChanges.forEachAddedItem(async (item) => {
         const smartEndpoint = await this._appSvc.getSmartEndpoint(item.item).then();
         const index = this.view.subViews.findIndex(i => i.connectToken.id === item.item.connectToken.id);

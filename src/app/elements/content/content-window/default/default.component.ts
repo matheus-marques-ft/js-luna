@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Asset, Endpoint, View} from '@app/model';
 import {joinEndpointUrl} from '@app/utils/path';
-// 多子目录方案（保留备用）：site prefix 相关工具
+// multi-subdirectory approach (kept as fallback): site prefix related utilities
 // import { getSitePrefix, joinEndpointUrl, withSitePrefix } from '@app/utils/path';
 
 @Component({
@@ -35,7 +35,7 @@ export class ElementConnectorDefaultComponent implements OnInit {
     this.el.nativeElement.focus();
   }
 
-  // dev 方案（当前生效）
+  // dev approach (currently in effect)
   generateIframeURL(asset, protocol) {
     if (this.iframeURL) {
       return this.iframeURL;
@@ -57,7 +57,7 @@ export class ElementConnectorDefaultComponent implements OnInit {
     }
   }
 
-  // 多子目录方案（保留备用）：site prefix + URLSearchParams 重写
+  // multi-subdirectory approach (kept as fallback): rewritten with site prefix + URLSearchParams
   // generateIframeURL(asset, protocol) {
   //   if (this.iframeURL) {
   //     return this.iframeURL;

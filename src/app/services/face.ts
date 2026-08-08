@@ -9,8 +9,8 @@ export class FaceService {
   private isVisible = new BehaviorSubject<boolean>(false);
   isVisible$ = this.isVisible.asObservable();
 
-  private monitoringTabCount = new BehaviorSubject<number>(0); // 添加用于监控 tab 数量的 BehaviorSubject
-  monitoringTabCount$ = this.monitoringTabCount.asObservable(); // 暴露 Observable
+  private monitoringTabCount = new BehaviorSubject<number>(0); // BehaviorSubject for monitoring the tab count
+  monitoringTabCount$ = this.monitoringTabCount.asObservable(); // Expose Observable
 
   openFaceMonitor() {
     this.isVisible.next(true);

@@ -1,5 +1,5 @@
 <div class="replay-container">
-  <!-- 信息头部 -->
+  <!-- Info header -->
   @if (!type) {
     <div class="info-header">
       <div class="info-item" *ngIf="replay.user">
@@ -27,14 +27,14 @@
   }
 
   <div class="main-content">
-    <!-- 视频播放区 -->
+    <!-- Video playback area -->
     <div class="video-area">
       <video controls>
         <source [src]="replay.src" type="video/mp4" />
       </video>
     </div>
 
-    <!-- 命令列表 -->
+    <!-- Command list -->
     <div class="commands-area" *ngIf="commands.length > 0">
       <div class="commands-header">
         <span>{{ 'Commands' | translate }} ({{ commands.length }})</span>

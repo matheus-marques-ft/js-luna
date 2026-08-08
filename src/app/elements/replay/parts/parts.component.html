@@ -1,5 +1,5 @@
 <div class="replay-container">
-  <!-- 信息栏 -->
+  <!-- Info bar -->
   <div class="info-header" *ngIf="currentVideo">
     <div class="info-item" *ngIf="replay?.user">
       <span class="label">{{ 'user' | translate }}:</span>
@@ -29,7 +29,7 @@
   </div>
 
   <div class="main-content">
-    <!-- 视频播放区 -->
+    <!-- Video playback area -->
     <div class="video-area" [class.playlist-hidden]="playlistCollapsed">
       <div class="loading-overlay" *ngIf="videoLoading">
         <nz-spin></nz-spin>
@@ -52,7 +52,7 @@
       }
     </div>
 
-    <!-- 播放列表 -->
+    <!-- Playlist -->
     <div class="playlist-area" [class.collapsed]="playlistCollapsed">
       <div class="playlist-header">
         <div class="playlist-title">
