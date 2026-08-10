@@ -1,5 +1,5 @@
 # Use base image to build the project avoid npm install every time
-FROM ghcr.io/matheus-marques-ft/luna-base:20260810_154254 AS stage-build
+FROM ghcr.io/matheus-marques-ft/luna-base:20260810_184519 AS stage-build
 
 ARG VERSION
 ENV VERSION=$VERSION
