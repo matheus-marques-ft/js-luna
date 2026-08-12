@@ -15,7 +15,7 @@ on:
         description: 'Branch used to build the base image'
         required: true
         type: string
-        default: 'main'
+        default: 'dev'
 
 jobs:
   build-and-push:
