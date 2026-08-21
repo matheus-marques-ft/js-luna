@@ -15,24 +15,11 @@ $asset-path: '../static/imgs/inspinia';
 $fa-font-path: '~font-awesome/fonts';
 
 @font-face {
-  font-family: 'Open Sans';
-  src: url('assets/fonts/OpenSans-Regular.ttf');
-  font-weight: normal;
+  font-family: 'Instrument Sans';
+  src: url('assets/fonts/InstrumentSans-Variable.ttf') format('truetype-variations');
+  font-weight: 400 700;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  src: url('assets/fonts/OpenSans-Bold.ttf');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  src: url('assets/fonts/OpenSans-Light.ttf');
-  font-weight: 300;
-  font-style: normal;
+  font-display: swap;
 }
 html,
 body {
@@ -43,7 +30,7 @@ body {
   overflow-y: hidden;
   margin: 0;
   font-size: 13px;
-  font-family: 'open sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 ul,
@@ -118,7 +105,7 @@ body ::-webkit-scrollbar-thumb {
 }
 
 .ztree *:not(.fa) {
-  font-family: 'Open Sans', 'Monaco', 'Consolas', 'monospace' !important;
+  font-family: 'Instrument Sans', 'Monaco', 'Consolas', 'monospace' !important;
   font-size: 13px !important;
 }
 
