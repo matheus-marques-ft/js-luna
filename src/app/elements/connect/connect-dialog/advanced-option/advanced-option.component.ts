@@ -1,7 +1,7 @@
-import { SettingService } from '@app/services';
+import { HttpService, LogService, SettingService } from '@app/services';
 import { resolutionsChoices } from '@app/globals';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { ConnectMethod, ConnectOption, GlobalSetting, Protocol, Setting } from '@app/model';
+import { Asset, ConnectMethod, ConnectOption, GlobalSetting, Protocol, Setting } from '@app/model';
 
 @Component({
   standalone: false,
@@ -10,6 +10,7 @@ import { ConnectMethod, ConnectOption, GlobalSetting, Protocol, Setting } from '
   styleUrls: ['advanced-option.component.scss']
 })
 export class ElementAdvancedOptionComponent implements OnChanges, OnInit {
+  @Input() asset: Asset;
   @Input() protocol: Protocol;
   @Input() connectMethod: ConnectMethod;
   @Input() connectOption: any = {};
@@ -25,7 +26,18 @@ export class ElementAdvancedOptionComponent implements OnChanges, OnInit {
   private allOptions: ConnectOption[] = [];
   public advancedOptions: ConnectOption[] = [];
 
-  constructor(public _settingSvc: SettingService) {
+  // Applet host choices for the 'applet' connect method; '' means Automatic
+  public appletHostOptions: Array<{ label: string; value: string }> = [
+    { label: 'Automatic', value: '' }
+  ];
+  private appletHostsKey = '';
+  private appletHostsReqId = 0;
+
+  constructor(
+    public _settingSvc: SettingService,
+    private _http: HttpService,
+    private _logger: LogService
+  ) {
     this.setting = _settingSvc.setting;
     this.globalSetting = _settingSvc.globalSetting;
   }
@@ -149,6 +161,14 @@ export class ElementAdvancedOptionComponent implements OnChanges, OnInit {
       },
       {
         type: 'select',
+        field: 'applet_host',
+        label: 'Applet host',
+        value: '',
+        options: this.appletHostOptions,
+        hidden: () => !this.connectMethod || this.connectMethod.type !== 'applet'
+      },
+      {
+        type: 'select',
         field: 'reusable',
         options: this.boolChoices,
         label: 'RDP file reusable',
@@ -229,6 +249,52 @@ export class ElementAdvancedOptionComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges() {
+    const isApplet = !!this.asset && !!this.connectMethod && this.connectMethod.type === 'applet';
+    const key = isApplet ? `${this.asset.id}|${this.connectMethod.value}` : '';
+    if (key !== this.appletHostsKey) {
+      this.appletHostsKey = key;
+      this.loadAppletHosts();
+    }
+    // Campo oculto fora do metodo 'applet': nao enviar valor antigo em connect_options
+    if (!isApplet && this.connectOption) {
+      delete this.connectOption['applet_host'];
+    }
+
+    this.allOptions = this.buildAllOptions();
+    this.checkOptions();
+  }
+
+  private loadAppletHosts() {
+    const reqId = ++this.appletHostsReqId;
+    const automatic = { label: 'Automatic', value: '' };
+
+    if (!this.appletHostsKey) {
+      this.appletHostOptions = [automatic];
+      return;
+    }
+
+    const assetId = this.asset.id;
+    const applet = this.connectMethod.value;
+    this.appletHostOptions = [automatic];
+
+    this._http.getAllowedAppletHosts(assetId, applet).subscribe({
+      next: hosts => {
+        if (reqId !== this.appletHostsReqId) return;
+        const hostOptions = (hosts || []).map(h => ({ label: h.name, value: h.id }));
+        this.appletHostOptions = [automatic, ...hostOptions];
+        this.refreshOptions();
+      },
+      error: err => {
+        if (reqId !== this.appletHostsReqId) return;
+        this._logger.error('Load allowed applet hosts error: ', err);
+        this.appletHostOptions = [automatic];
+        this.refreshOptions();
+      }
+    });
+  }
+
+  // Rebuild options so the select picks up new choices; checkOptions resets a stale applet_host to ''
+  private refreshOptions() {
     this.allOptions = this.buildAllOptions();
     this.checkOptions();
   }

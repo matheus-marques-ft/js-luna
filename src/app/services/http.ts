@@ -570,6 +570,11 @@ export class HttpService {
     return this.get(url);
   }
 
+  getAllowedAppletHosts(assetId: string, applet: string) {
+    const url = `/api/v1/terminal/applet-hosts/allowed/?asset=${encodeURIComponent(assetId)}&applet=${encodeURIComponent(applet)}`;
+    return this.get<Array<{ id: string; name: string; load: any }>>(url);
+  }
+
   getUserDetail(uid: string): Promise<_User> {
     const url = `/api/v1/users/users/${uid}/`;
     return this.get<_User>(url).toPromise();
